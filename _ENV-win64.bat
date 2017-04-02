@@ -1,0 +1,4 @@
+@echo off
+set PATH=%MINGW64%;%PATH%
+set TARGET_PLATFORM=win64
+set TARGET_ARCH=amd64
