@@ -2,8 +2,8 @@
 
 echo.
 echo ------ STARTING PACK RELEASE %1-%2 ------
-set DEST=_RELEASE\AllTheHaxx-%1-%2
-mkdir %DEST% >NUL
+set DEST=_RELEASE\_build\AllTheHaxx-%1-%2
+mkdir %DEST%
 
 copy *.dll %DEST% /Y
 copy AllTheHaxx.exe %DEST% /Y
@@ -17,7 +17,17 @@ echo .git > %EXCLUDE_FILE%
 echo .gitignore >> %EXCLUDE_FILE%
 xcopy Lua-Scripts %DEST%\lua\ /EXCLUDE:%EXCLUDE_FILE% /s /e /Y
 
+rem @echo on
+:: cd _RELEASE\_build
 cd %DEST%\..
-7z a AllTheHaxx-%1-%2.zip AllTheHaxx-%1-%2
-7z a -sfx7zCon.sfx AllTheHaxx-%1-%2.exe AllTheHaxx-%1-%2
-cd ..
+:: %PACKS% will be _RELEASE\<VERSION>\packs
+set PACKS=..\%1\packs
+if not exist %PACKS% mkdir %PACKS%
+7z a %PACKS%\AllTheHaxx-%1-%2.zip AllTheHaxx-%1-%2
+7z a -sfx7z.sfx %PACKS%\AllTheHaxx-%1-%2.exe AllTheHaxx-%1-%2
+copy AllTheHaxx-%1-%2\AllTheHaxx.exe %PACKS%\..\AllTheHaxx-%2.exe
+copy AllTheHaxx-%1-%2\AllTheHaxx-NoLua.exe %PACKS%\..\AllTheHaxx-NoLua-%2.exe
+
+rem cleanups
+::rmdir /s /q AllTheHaxx-%1-%2
+cd ..\..

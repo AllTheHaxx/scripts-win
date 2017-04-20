@@ -19,7 +19,7 @@ echo.
 echo ----- Building %1 without lua
 ping localhost -n 2 >NUL
 
-echo lua.value=false >> .bam\config_%1.lua
+echo lua.value=false >> config_%1.lua
 bam client_release
 move /Y AllTheHaxx.exe AllTheHaxx-NoLua.exe
 
